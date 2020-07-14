@@ -1,0 +1,40 @@
+Step 1: Install and Configure Required Dependencies
+1. First, start by installing the following necessary dependencies using the yum package manager as shown.
+
+# yum install curl policycoreutils-python openssh-server 
+2. Next, install Postfix service to send notification emails, and enable it to start at system boot, then check if it is up and running using following commands.
+
+# yum install postfix
+# systemctl start postfix
+# systemctl enable postfix
+# systemctl status postfix
+During Postfix installation a configuration window may appear. Select ‘Internet Site‘ and use your server’s external DNS for ‘mail name‘ and press enter. If extra screens appear, continue to press enter to accept the defaults.
+
+Step 2: Add GitLab Repository and Install Package
+3. Now add the GitLab package YUM repository to your system by running the following script.
+
+$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash
+4. Next, install the GitLab Community Edition package using the following command and make sure to change ‘http://gitlab.tecmint.com‘ to the URL at which you want to access your GitLab instance from a web browser.
+
+# EXTERNAL_URL="http://gitlab.tecmint.com" yum install -y gitlab-ce
+Note: If you want to change your main URL, you can configure it in the GitLab main configuration file /etc/gitlab/gitlab.rb in the external_url section. Once changed, don’t forget to reconfigure gitlab to apply the recent changes in the configuration file using the following command.
+
+# gitlab-ctl reconfigure
+5. If you have a system firewall enabled, you need to open port 80 (HTTP) and 443 (HTTPS) to allow connections in the system firewall.
+
+# firewall-cmd --permanent --add-service=80/tcp
+# firewall-cmd --permanent --add-service=443/tcp
+# systemctl reload firewalld
+Step 3: Perform Initial Gitlab Setup
+6. Now, open a web browser and access your gitlab instance using the following URL you set during installation.
+
+http://gitlab.tecmint.com
+7. On your first visit, you’ll be redirected to a password reset screen, create a new password for your new admin account and click “Change your password”. Once you set, it will be redirected back to the login screen and login with username root and the password you set.
+
+GitLab Admin Login
+GitLab Admin Login
+8. After a successful login, it should take you into the admin user account as shown in the screenshot. From, here, you can create an object, create a group, add people or configure your gitlab instance as you wish. You can also edit your user profile, configure your email, and add SSH keys to your gitlab instance, and more.
+
+Gitlab Admin Control Panel
+Gitlab Admin Control Panel
+For more information, go to Gitlab About Page: https://about.gitlab.com/
