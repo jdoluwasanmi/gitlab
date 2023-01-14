@@ -38,3 +38,8 @@ GitLab Admin Login
 Gitlab Admin Control Panel
 Gitlab Admin Control Panel
 For more information, go to Gitlab About Page: https://about.gitlab.com/
+
+
+
+to change gitlab password
+gitlab-rake 'gitlab:password:reset[root]'
